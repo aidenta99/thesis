@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pandas = "*"
+numpy = "*"
+matplotlib = "*"
+plotly = "*"
+seaborn = "*"
+nbformat = "*"
+ipykernel = "*"
+kaleido = "*"
+pgmpy = "*"
+phik = "*"
+
+[dev-packages]
+ipykernel = "*"
+
+[requires]
+python_version = "3.9"
