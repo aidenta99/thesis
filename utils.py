@@ -67,23 +67,38 @@ def preprocessing(df):
 
     return df
 
+# Get the list of schools from school dataframe, and add "NA" for null values
+def get_school_list(df):
+    schools = list(df['Key'])
+    schools.append('NA')
+    return schools
 
 # Encoding choice data, using indices of school list
-def encoding(choice_df, school_df):
+def encoding(df, schools):
 
     # Get school indices from the school list dataframe
-    school_indices_dict = dict(zip(school_df.Key, school_df.index))
-    school_indices_dict['NA']  = len(school_indices_dict)
+    school_indices_dict = dict(zip(schools, range(len(schools))))
 
-    choice_cols = [c for c in list(choice_df.columns) if 'Voorkeur' in c]
-    encoded_df = choice_df.copy()
+    encoded_null = school_indices_dict['NA']
+
+    choice_cols = [c for c in list(df.columns) if 'Voorkeur' in c]
 
     for choice_col in choice_cols:
-        encoded_df[choice_col] = encoded_df[choice_col].map(school_indices_dict)
-        encoded_df[choice_col].fillna(len(school_indices_dict), inplace=True)
-        encoded_df[choice_col] = encoded_df[choice_col].astype(int, copy=False)
+        df[choice_col] = df[choice_col].map(school_indices_dict)
+        df[choice_col].fillna(encoded_null, inplace=True)
+        df[choice_col] = df[choice_col].astype(int, copy=False)
     
-    return encoded_df
+    return df
+
+def decoding(df, schools):
+    # Input: encoded dataframe, decoding it into the original format
+    school_indices_dict = dict(zip(range(len(schools)), schools))
+    choice_cols = [c for c in list(df.columns) if 'Voorkeur' in c]
+    for choice_col in choice_cols:
+        df[choice_col] = df[choice_col].map(school_indices_dict)
+        df[choice_col] = df[choice_col].astype(str, copy=False)
+
+    return df
 
 
 # Display BN
