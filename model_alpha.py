@@ -55,15 +55,15 @@ def model_alpha_single_simulation(choice_col_dists, n_schools, edu_type):
     num_choice_cols = len(choice_col_dists)
 
     for i in range(num_choice_cols):
-        # If previous choice is the last one, aka encoded value of null (aka 182), 
+        # If previous choice is the last one, aka encoded value of null (in this case, 181), 
         # then current choice is also (encoded) null
-        if previous_choice == n_schools:
-            current_choice = n_schools
+        if previous_choice == n_schools-1:
+            current_choice = n_schools-1
         else:
             updated_dist = update_distribution(choice_col_dists[i], chosen_schools)
             current_choice = np.random.choice(range(n_schools), 1, p=updated_dist)[0]
             chosen_schools.append(current_choice)
-        simulation_dict['Voorkeur {}'.format(i)] = current_choice
+        simulation_dict['Voorkeur {}'.format(i+1)] = current_choice
         previous_choice = current_choice
     
     return simulation_dict
