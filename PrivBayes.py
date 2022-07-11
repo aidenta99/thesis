@@ -141,12 +141,12 @@ def greedy_bayes(dataset: DataFrame, k: int, epsilon: float, seed=0):
 
     attr_to_is_binary = {attr: dataset[attr].unique().size <= 2 for attr in dataset}
 
-    print('================ Constructing Bayesian Network (BN) ================')
+    # print('================ Constructing Bayesian Network (BN) ================')
     root_attribute = random.choice(dataset.columns)
     V = [root_attribute]
     rest_attributes = list(dataset.columns)
     rest_attributes.remove(root_attribute)
-    print(f'Adding ROOT {root_attribute}')
+    # print(f'Adding ROOT {root_attribute}')
     N = []
     while rest_attributes:
         parents_pair_list = []
@@ -173,9 +173,9 @@ def greedy_bayes(dataset: DataFrame, k: int, epsilon: float, seed=0):
         adding_attribute = parents_pair_list[idx][0]
         V.append(adding_attribute)
         rest_attributes.remove(adding_attribute)
-        print(f'Adding attribute {adding_attribute}')
+        # print(f'Adding attribute {adding_attribute}')
 
-    print('========================== BN constructed ==========================')
+    # print('========================== BN constructed ==========================')
 
     return N
 
